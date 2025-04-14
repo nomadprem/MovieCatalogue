@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Movie Catalogue</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1>Trending Movies</h1>
+        <!-- Navigation button for favorites -->
+        <nav class="nav-buttons">
+            <a href="/favorites" class="favorites-button">Favorites</a>
+        </nav>
+    </div>
+    <div class="search-container">
+        <form th:action="@{/movies/search}" method="get">
+            <input type="text" name="query" placeholder="Search movies..." th:value="${searchQuery}" />
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</header>
+
+<div class="container">
+    <ul class="movie-list" th:if="${movies}">
+        <li th:each="movie : ${movies}">
+            <!-- Poster with fallback logic -->
+            <img th:if="${movie.posterPath != null and #strings.isNotEmpty(movie.posterPath)}"
+                 th:src="@{|https://image.tmdb.org/t/p/w200/${movie.posterPath}|}" alt="Movie Poster" />
+            <img th:if="${movie.posterPath == null or #strings.isEmpty(movie.posterPath)}"
+                 th:src="@{/images/placeholder.png}" alt="Placeholder Poster" />
+            <div class="movie-info">
+                <span th:text="${movie.title}">Movie Title</span>
+                <a th:href="@{'/movies/' + ${movie.id}}">View Details</a>
+                <form th:action="@{'/movies/' + ${movie.id} + '/favorite'}" method="post" style="display:inline;">
+                    <button type="submit">Favorite</button>
+                </form>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<footer>
+    <p>&copy; 2025 Movie Catalogue System</p>
+</footer>
+</body>
+</html>

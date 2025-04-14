@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${movie.title}">Movie Details</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1 th:text="${movie.title}">Movie Title</h1>
+        <!-- Navigation button for favorites -->
+        <nav class="nav-buttons">
+            <a href="/favorites" class="favorites-button">Favorites</a>
+        </nav>
+    </div>
+</header>
+
+<div class="container movie-detail">
+    <img th:if="${movie.posterPath != null and #strings.isNotEmpty(movie.posterPath)}"
+         th:src="@{|https://image.tmdb.org/t/p/w300/${movie.posterPath}|}" alt="Movie Poster" />
+    <img th:if="${movie.posterPath == null or #strings.isEmpty(movie.posterPath)}"
+         th:src="@{/images/placeholder.png}" alt="Placeholder Poster" />
+
+    <p th:text="${movie.overview}">Overview goes here...</p>
+    <p>Release Date: <span th:text="${movie.releaseDate}">N/A</span></p>
+    <p>Rating: <span th:text="${movie.rating}">N/A</span></p>
+
+    <form th:action="@{'/movies/' + ${movie.id} + '/favorite'}" method="post">
+        <button type="submit">Add to Favorites</button>
+    </form>
+
+    <a href="/movies">Back to List</a>
+</div>
+
+<footer>
+    <p>&copy; 2025 Movie Catalogue System</p>
+</footer>
+</body>
+</html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${movie.title}">Movie Details</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<header>
+    <div class="header-content">
+        <h1 th:text="${movie.title}">Movie Title</h1>
+        <!-- Navigation button for favorites -->
+        <nav class="nav-buttons">
+            <a href="/favorites" class="favorites-button">Favorites</a>
+        </nav>
+    </div>
+</header>
+
+<div class="container movie-detail">
+    <img th:if="${movie.posterPath != null and #strings.isNotEmpty(movie.posterPath)}"
+         th:src="@{|https://image.tmdb.org/t/p/w300/${movie.posterPath}|}" alt="Movie Poster" />
+    <img th:if="${movie.posterPath == null or #strings.isEmpty(movie.posterPath)}"
+         th:src="@{/images/placeholder.png}" alt="Placeholder Poster" />
+
+    <p th:text="${movie.overview}">Overview goes here...</p>
+    <p>Release Date: <span th:text="${movie.releaseDate}">N/A</span></p>
+    <p>Rating: <span th:text="${movie.rating}">N/A</span></p>
+
+    <form th:action="@{'/movies/' + ${movie.id} + '/favorite'}" method="post">
+        <button type="submit">Add to Favorites</button>
+    </form>
+
+    <a href="/movies">Back to List</a>
+</div>
+
+<footer>
+    <p>&copy; 2025 Movie Catalogue System</p>
+</footer>
+</body>
+</html>

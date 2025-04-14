@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Favorite Movies</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<header>
+    <h1>Your Favorite Movies</h1>
+</header>
+
+<div class="container">
+    <ul class="movie-list" th:if="${favorites}">
+        <li th:each="fav : ${favorites}">
+            <img th:if="${fav.posterPath != null and #strings.isNotEmpty(fav.posterPath)}"
+                 th:src="@{|https://image.tmdb.org/t/p/w200/${fav.posterPath}|}" alt="Movie Poster" />
+            <img th:if="${fav.posterPath == null or #strings.isEmpty(fav.posterPath)}"
+                 th:src="@{/images/placeholder.png}" alt="Placeholder Poster" />
+            <div class="movie-info">
+                <span th:text="${fav.title}">Title</span>
+                <!-- Remove from favorites form -->
+                <form th:action="@{'/favorites/' + ${fav.tmdbId} + '/remove'}" method="post" style="display:inline;">
+                    <button type="submit">Remove</button>
+                </form>
+            </div>
+        </li>
+    </ul>
+    <a href="/movies">Back to Movie List</a>
+</div>
+
+<footer>
+    <p>&copy; 2025 Movie Catalogue System</p>
+</footer>
+</body>
+</html>
